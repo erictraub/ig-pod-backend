@@ -22,7 +22,7 @@ router.post('/', function(req, res, next) {
 });
 
 router.post('/find-or-create', function(req, res, next) {
-    User.findOneOrCreate({ chromeId: req.body.chromeId })
+    User.findOneByChromeIdOrCreate(req.body)
     .then(user => {
         res.status(200).send(user);
     });

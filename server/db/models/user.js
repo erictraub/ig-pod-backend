@@ -2,9 +2,16 @@
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    igUsername: {
+    instagramUsername: {
         type: String,
         required: true
+    },
+    instagramId: {
+        type: String,
+        required: true
+    },
+    profilePic: {
+        type: String
     },
     chromeId: {
         type: String,
@@ -18,10 +25,10 @@ var schema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    postsSubmittedForLike: {
+    postsSubmittedForLikes: {
         type: [ mongoose.Schema.Types.ObjectId ],
         ref: 'Post',
-        default: null
+        default: []
     },
     batchNumber: {
         type: Number, // 0 - 100
@@ -29,9 +36,9 @@ var schema = new mongoose.Schema({
     }
 });
 
-schema.statics.findOneOrCreate = function findOneOrCreate(params) {
+schema.statics.findOneByChromeIdOrCreate = function findOneOrCreate(params) {
     const self = this;
-    return self.findOne(params)
+    return self.findOne({ chromeId: params.chromeId })
     .then(user => {
         if (!user) {
             params.batchNumber = Math.floor(Math.random() * 100) + 1;
