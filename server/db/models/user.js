@@ -15,8 +15,7 @@ var schema = new mongoose.Schema({
     },
     chromeId: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     email: {
         type: String
@@ -24,6 +23,11 @@ var schema = new mongoose.Schema({
     mostRecentPost: {
         type: Number,
         default: 0
+    },
+    userLevel: {
+        type: Number,
+        required: true,
+        default: 1
     },
     postsSubmittedForLikes: {
         type: [ mongoose.Schema.Types.ObjectId ],
@@ -33,12 +37,16 @@ var schema = new mongoose.Schema({
     batchNumber: {
         type: Number, // 0 - 100
         required: true
+    },
+    privateInstagram: {
+        type: Boolean,
+        required: true
     }
 });
 
 schema.statics.findOneByChromeIdOrCreate = function findOneOrCreate(params) {
     const self = this;
-    return self.findOne({ chromeId: params.chromeId })
+    return self.findOne({ chromeId: params.chromeId, instagramId: params.instagramId })
     .then(user => {
         if (!user) {
             params.batchNumber = Math.floor(Math.random() * 100) + 1;
