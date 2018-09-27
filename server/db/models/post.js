@@ -15,6 +15,15 @@ var schema = new mongoose.Schema({
     timestamp: {
         type: String,
         required: true
+    },
+    imageUrl: {
+        type: String
+    },
+    video: {
+        type: Boolean
+    },
+    shortCode: {
+        type: String
     }
 });
 

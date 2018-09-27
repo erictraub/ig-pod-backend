@@ -7,8 +7,8 @@ module.exports = router;
 
 router.get('/', function (req, res, next) {
     User.find({}).exec()
-    .then(function(addons) {
-        res.status(200).send(addons);
+    .then(function(users) {
+        res.status(200).send(users);
     })
     .catch(next);
 });
