@@ -23,6 +23,10 @@ var schema = new mongoose.Schema({
         type: Boolean
     },
     shortCode: {
+        type: String,
+        required: true
+    },
+    postInstagramId: {
         type: String
     }
 });
