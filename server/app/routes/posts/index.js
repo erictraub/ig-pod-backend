@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Post = mongoose.model('Post');
 const User = mongoose.model('User');
 const chalk = require('chalk');
+const postEmitter = require('../../../io/postEmitter');
 module.exports = router;
 
 
@@ -33,6 +34,7 @@ router.post('/new-post-to-like', function(req, res, next) {
     }).then(updatedUser => {
         res.send({ message: "Post created successfully.", newPost: newPost, updatedUser: updatedUser });
         // now send post out via sockets
+        postEmitter.emitPostToLikeToClients(newPost);
     }).catch(err => {
         if (err === "Post already in DB.") res.status(400).send({ error: true, errorMessage: "Post already in DB." });
         else next(err);
@@ -41,11 +43,10 @@ router.post('/new-post-to-like', function(req, res, next) {
 
 
 router.get('/testing' , function(req, res, next) {
-    console.log("HIT THE ROUTEEEE")
-    const io = require('../../../io')();
-    io.open();
-    // io.on('connect', function (socket) {
+    postEmitter.emitPostToLike({id: 123123, url: 'someurl here'});
+    // const io = require('../../../io')();
+    // io.on('connection', function (socket) {
     //     console.log('EMITTING...');
-    //     socket.emit('new post to like', { someData: 'here is the data' });
+    //     socket.emit('new post to like', { someData: 'some post data' });
     // });
 });
