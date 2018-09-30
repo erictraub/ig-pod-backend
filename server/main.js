@@ -8,10 +8,12 @@ var startDb = require('./db');
 // Create a node server instance! cOoL!
 var server = require('http').createServer();
 
+
 var createApplication = function () {
     var app = require('./app');
     server.on('request', app); // Attach the Express application.
     require('./io')(server);   // Attach socket.io.
+    // require('socket.io').listen(server);
 };
 
 var startServer = function () {
