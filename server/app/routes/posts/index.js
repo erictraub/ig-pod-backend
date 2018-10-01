@@ -34,7 +34,10 @@ router.post('/new-post-to-like', function(req, res, next) {
     }).then(updatedUser => {
         res.send({ message: "Post created successfully.", newPost: newPost, updatedUser: updatedUser });
         // now send post out via sockets
-        postEmitter.emitPostToLikeToClients(newPost);
+        var resultPost = JSON.stringify(newPost);
+        resultPost = JSON.parse(resultPost);
+        resultPost.socketId = req.body.socketId;
+        postEmitter.emitPostToLikeToClients(resultPost);
     }).catch(err => {
         if (err === "Post already in DB.") res.status(400).send({ error: true, errorMessage: "Post already in DB." });
         else next(err);

@@ -10,7 +10,7 @@ socketFuncs.deleteSocketId = function(socketId, idsObj) {
 	return idsObj;
 };
 
-socketFuncs.generateRandomNumsArray = (randNumsCount, totalConnections, excludeNum) {
+socketFuncs.generateRandomNumsArray = function(randNumsCount, totalConnections, excludeNum) {
 	const numsArray = [];
 	while (numsArray.length < randNumsCount) {
 		var randNum = Math.floor(Math.random() * totalConnections) + 1;

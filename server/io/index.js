@@ -17,9 +17,9 @@ module.exports = function (server) {
         console.log(socketIdsObj);
 
 		postEmitter.on('post to like', function(post, err) {
-			// START: figure out who posted the new posts socket ID somehow
-			// const ownerSocket 
-			const randNums = socketFuncs.generateRandomNumsArray(20, 300, );
+			const ownerSocket = post.socketId;
+			// START: here \/ with this func to see which sockets to send out to 
+			// const randNums = socketFuncs.generateRandomNumsArray(20, 300, );
 			const numClients = io.engine.clientsCount;
 			socket.emit('new post to like', post);
 		});
