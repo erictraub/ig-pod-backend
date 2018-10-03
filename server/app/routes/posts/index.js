@@ -44,12 +44,3 @@ router.post('/new-post-to-like', function(req, res, next) {
     });
 });
 
-
-router.get('/testing' , function(req, res, next) {
-    postEmitter.emitPostToLike({id: 123123, url: 'someurl here'});
-    // const io = require('../../../io')();
-    // io.on('connection', function (socket) {
-    //     console.log('EMITTING...');
-    //     socket.emit('new post to like', { someData: 'some post data' });
-    // });
-});

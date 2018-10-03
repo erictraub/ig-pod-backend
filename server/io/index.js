@@ -16,19 +16,39 @@ module.exports = function (server) {
         socketFuncs.saveSocketId(socket.id, socketIdsObj);
         console.log(socketIdsObj);
 
-		postEmitter.on('post to like', function(post, err) {
-			const ownerSocket = post.socketId;
-			// START: here \/ with this func to see which sockets to send out to 
-			// const randNums = socketFuncs.generateRandomNumsArray(20, 300, );
-			const numClients = io.engine.clientsCount;
-			socket.emit('new post to like', post);
-		});
+		// postEmitter.on('post to like', function(post, err) {
+		// 	console.log('FOR THIS SOCKET: ', socket.id);
+		// 	const numAllowedLikes = 20;
+		// 	const ownerSocket = post.socketId;
+		// 	console.log('ownerSocket: ', ownerSocket);
+		// 	const socketsArray = Array.prototype.slice.call(Object.keys(socketIdsObj));
+		// 	console.log('socketsArray: ', socketsArray);
+		// 	const ownerSocketIndex = socketsArray.indexOf(ownerSocket);
+		// 	console.log('ownerSocketIndex: ', ownerSocketIndex);
+		// 	const randNumsArray = socketFuncs.generateRandomNumsArray(numAllowedLikes, 300, ownerSocketIndex);
+		// 	console.log('randNums: ', randNumsArray);
+		// 	socket.emit('new post to like', post);
+		// });
 
 	    socket.on('disconnect', function () {
 	        console.log(chalk.magenta('- Disconnected from socket: ', socket.id));
 	        socketFuncs.deleteSocketId(socket.id, socketIdsObj);
 	    });
     });
+
+	postEmitter.on('post to like', function(post, err) {
+		// console.log('FOR THIS SOCKET: ', socket.id);
+		const numAllowedLikes = 20;
+		const ownerSocket = post.socketId;
+		console.log('ownerSocket: ', ownerSocket);
+		const socketsArray = Array.prototype.slice.call(Object.keys(socketIdsObj));
+		console.log('socketsArray: ', socketsArray);
+		const ownerSocketIndex = socketsArray.indexOf(ownerSocket);
+		console.log('ownerSocketIndex: ', ownerSocketIndex);
+		const randNumsArray = socketFuncs.generateRandomNumsArray(numAllowedLikes, 300, ownerSocketIndex);
+		console.log('randNums: ', randNumsArray);
+		io.emit('new post to like', post);
+	});
 
     
     return io;
