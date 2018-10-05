@@ -28,6 +28,9 @@ var schema = new mongoose.Schema({
     },
     postInstagramId: {
         type: String
+    },
+    socketId: {
+        type: String
     }
 });
 
